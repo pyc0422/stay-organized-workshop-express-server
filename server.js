@@ -3,7 +3,7 @@ const cors = require("cors");
 const fs = require("fs");
 
 const app = express();
-
+const PORT = 3000;
 
 ///////////////////////////////////////////////////////////////////////
 //   MIDDLEWARE (CONFIGURATIONS) //////////////////////////////////////
@@ -20,13 +20,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Serve static front-end files (HTML, etc.) from "./public"
-// app.use(express.static("public"));
+app.use(express.static("public"));
 
 
 ///////////////////////////////////////////////////////////////////////
 //   API ENDPOINTS ////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
-
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/public/index.html");
+})
 
 // Get all categories 
 app.get("/api/categories", function (request, response) {
@@ -354,7 +356,7 @@ app.post("/api/users", function (request, response) {
 ///////////////////////////////////////////////////////////////////////
 
 
-const server = app.listen(8083, () => {
+const server = app.listen(PORT, () => {
     const port = server.address().port;
     console.info("App listening at port", port);
 });
