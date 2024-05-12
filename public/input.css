@@ -2,3 +2,71 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply m-0 p-0 flex flex-col items-center h-screen
+  }
+  label{
+    @apply text-black text-sm font-semibold capitalize
+  }
+  input{
+    @apply text-black text-sm font-normal border rounded-md p-1
+  }
+  button {
+    @apply bg-blue-300 shadow-lg hover:bg-blue-700 text-white font-bold py-1 m-2 rounded
+  }
+  h1 {
+    @apply text-3xl font-bold text-center
+  }
+  h3{
+    @apply text-xl font-normal
+  }
+  h4{
+    @apply text-lg font-normal
+  }
+  h5 {
+    @apply text-sm font-normal
+  }
+}
+
+.input-div{
+  @apply m-1 p-1 flex gap-3 justify-center
+}
+
+.todo-card{
+  @apply p-4 m-2 flex gap-5 justify-start items-start border rounded-lg shadow-lg w-96
+}
+.todo-checkbox{
+  @apply h-6 w-6 cursor-pointer appearance-none checked:bg-blue-300 relative shrink-0 rounded-sm bg-white ring-2 ring-blue-300
+}
+.todo-checkbox-icon{
+  @apply absolute ml-0.5 w-5 h-5 hidden peer-checked:block
+}
+.checkbox-div{
+  @apply text-2xl p-2 cursor-pointer
+}
+.task-div{
+  @apply flex flex-col gap-3 w-full
+}
+.task-main{
+  @apply flex justify-between items-center gap-3 w-full
+}
+.task-priority{
+  @apply flex justify-center items-center gap-1
+}
+.task-bottom{
+  @apply flex gap-3 text-xs justify-start font-light items-center
+}
+.task-ddl{
+  @apply bg-gray-200 px-1.5 py-1 rounded-md
+}
+.task-category{
+  @apply text-gray-400
+}
+.task-title{
+  @apply text-sm font-normal
+}
+.task-priority-text{
+  @apply text-xs font-light
+}

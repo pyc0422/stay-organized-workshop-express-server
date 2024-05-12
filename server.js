@@ -22,13 +22,20 @@ app.use(express.json());
 // Serve static front-end files (HTML, etc.) from "./public"
 app.use(express.static("public"));
 
+// ROUTER ENDPOINTS
+// app.get("/", (req, res) => {
+//     res.sendFile(__dirname + "/public/index.html");
+// })
+app.get("/todo/:id", (req, res) => {
+    res.sendFile(__dirname + "/public/pages/todos.html");
+})
 
+app.get("/newTodo", (req, res) => {
+    res.sendFile(__dirname + "/public/pages/newTodo.html");
+})
 ///////////////////////////////////////////////////////////////////////
 //   API ENDPOINTS ////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
-app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/public/index.html");
-})
 
 // Get all categories 
 app.get("/api/categories", function (request, response) {
@@ -139,6 +146,13 @@ app.get("/api/users", function (request, response) {
         .json(usersWithoutPasswords);
 });
 
+app.post("/api/login", (req,res) => {
+    const json = fs.readFileSync(__dirname + "/data/users.json", "utf8");
+    const users = JSON.parse(json);
+    const { name, password } = req.body;
+    const user = users.find(user => user.username === name && user.password === password);
+    return user ? res.status(200).json(user) : res.status(404).json({ error: "User not found" });
+})
 
 // Find out if a specific username is available
 app.get("/api/username_available/:username", function (request, response) {
