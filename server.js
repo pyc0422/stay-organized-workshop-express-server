@@ -23,16 +23,18 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // ROUTER ENDPOINTS
-// app.get("/", (req, res) => {
-//     res.sendFile(__dirname + "/public/index.html");
-// })
+app.get("/todos", (req, res) => {
+    res.sendFile(__dirname + "/public/pages/todos.html");
+})
 app.get("/todo/:id", (req, res) => {
     res.sendFile(__dirname + "/public/pages/todos.html");
 })
-
 app.get("/newTodo", (req, res) => {
-    res.sendFile(__dirname + "/public/pages/newTodo.html");
+    res.sendFile(__dirname + "/public/pages/new_todo.html");
 })
+app.get("/newUser", (req, res) => {
+    res.sendFile(__dirname + "/public/pages/new_user.html");
+});
 ///////////////////////////////////////////////////////////////////////
 //   API ENDPOINTS ////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////

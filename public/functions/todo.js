@@ -1,15 +1,18 @@
-import { capitalize } from "./helper.js";
+import { capitalize, renderNavBarAndLoggedUser } from "./helper.js";
 
 window.onload = () => {
-    const h3 = document.querySelector('h3');
+    renderNavBarAndLoggedUser('todo');
     const urlParams = window.location.pathname.split('/');
-    let userId = urlParams[urlParams.length - 1];
-    const {name, username} = JSON.parse(sessionStorage.getItem('user'));
-    h3.innerHTML = `Welcome <span style="color:rgb(3 105 161)">${capitalize(name)}</span> !`;
+    let userId = urlParams[urlParams.length - 1] ==='todos' ? JSON.parse(sessionStorage.getItem('user')).id : urlParams[urlParams.length - 1];
     renderUsers(userId);
     const select = document.getElementById("user-select")
     // render logged in user's todo list as default
-    renderTodos(userId)
+    if (!userId) {
+        renderTodos('all')
+    } else {
+        renderTodos(userId)
+    }
+
     select.addEventListener('change', (e) => {
         const selected = e.target.value;
         renderTodos(selected);

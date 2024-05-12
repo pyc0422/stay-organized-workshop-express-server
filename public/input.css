@@ -20,13 +20,13 @@
     @apply text-3xl font-bold text-center
   }
   h3{
-    @apply text-xl font-normal
-  }
-  h4{
     @apply text-lg font-normal
   }
-  h5 {
+  h4{
     @apply text-sm font-normal
+  }
+  h5 {
+    @apply text-xs font-normal
   }
 }
 
@@ -69,4 +69,11 @@
 }
 .task-priority-text{
   @apply text-xs font-light
+}
+
+.current-a {
+  @apply sm:block bg-gray-600 text-white rounded-md px-3 py-2 text-sm font-medium
+}
+.nav-a {
+  @apply text-white hover:bg-gray-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium
 }

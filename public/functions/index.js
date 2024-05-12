@@ -1,5 +1,6 @@
-
+import { renderNavBarAndLoggedUser } from "./helper.js";
 window.onload = () => {
+    renderNavBarAndLoggedUser('homepage');
     const form = document.getElementById('login-form');
     form.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -21,7 +22,7 @@ window.onload = () => {
         .then((user) => {
             const {name, username, id} = user
             sessionStorage.setItem('user', JSON.stringify({id, name, username}))
-            window.location.href = `/todo/${id}`
+            window.location.href = '/todo'
         })
         .catch(err => alert(err))
     })
