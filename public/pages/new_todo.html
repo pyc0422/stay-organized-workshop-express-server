@@ -9,7 +9,41 @@
     <script src="../functions/new_todo.js" type="module"></script>
 </head>
 <body>
-
-    <h1>This is add a new todo page</h1>
+    <div class="container w-3/4 mx-auto">
+        <form id="new-todo-form" class="container w-3/4 my-2 p-4 gap-5 mx-auto flex flex-col items-center">
+            <div class="flex w-3/4 items-center justify-between">
+                <div>
+                    <label for="user-select">User:</label>
+                    <select id="user-select"></select>
+                </div>
+                <div>
+                    <label for="categories">Category:</label>
+                    <select id="categories"></select>
+                </div>
+            </div>
+            <div class="flex w-3/4 justify-start gap-3">
+                <label for="description">Task:</label>
+                <textarea id="description" class="border w-full text-base font-normal border-gray-600 rounded"></textarea>
+            </div>
+            <div class="flex w-3/4 justify-between items-center">
+                <div>
+                    <label for="deadline">Due Date:</label>
+                    <input type="date" id="deadline" class="apperance-none">
+                </div>
+                <div>
+                    <label for="priority">Priority: </label>
+                    <select id="priority">
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                </div>
+            </div>
+            <div class="w-3/4 flex justify-between items-center">
+                <button type="submit" class="w-1/2">Save Task</button>
+                <button type="reset" class="w-1/2 gray-button">Clear</button>
+            </div>
+            </form>
+    </div>
 </body>
 </html>

@@ -8,7 +8,8 @@ export const capitalize = (str) => {
 
 export const renderNavBarAndLoggedUser = (page) =>{
     const h3 = document.querySelector('h3');
-    const {name, username} = JSON.parse(sessionStorage.getItem('user'));
+    const storaged = sessionStorage.getItem('user');
+    const {name, username} = storaged ? JSON.parse(storaged) : {};
     var navHtml = `
         <nav class="bg-blue-300 w-screen">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -28,16 +29,24 @@ export const renderNavBarAndLoggedUser = (page) =>{
             </div>
         </div>
         <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <a href="/newTodo" class="bg-blue-700 text-white hover:bg-gray-600 hover:text-white rounded-md px-5 py-2 text-sm font-medium">
+            <a href="/newTodo" class=${page === 'newTodo' ? 'current-a' : "add-new"}>
                 <span class="text-md">+</span> New Task
             </a>
-            ${name && page !== 'homepage' ? '<a href="/" class="nav-a" id="logout-btn">Logout</a>' : ''}
+            ${name && page !== 'homepage' ? '<a class="nav-a ml-3 p-1" id="logout-btn">Logout</a>' : ''}
         </div>
         </div>
         </div>
         </nav>
-        ${name && `<h3 class="m-2 p-2 font-bold">Welcome <span style="color:rgb(3 105 161)">${capitalize(name)}</span></h3>`}
+        ${name && page !== 'homepage' ? `<h3 class="m-2 p-2 font-bold">Welcome <span style="color:rgb(3 105 161)">${capitalize(name)}</span></h3>` : ''}
         `
     document.body.insertAdjacentHTML('afterbegin', navHtml);
+    const logoutBtn = document.getElementById('logout-btn');
+    if(!logoutBtn) return;
+    logoutBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        sessionStorage.removeItem('user');
+        alert(`${capitalize(name)} has been logged out!`)
+        window.location.href = '/';
+    })
 }
 

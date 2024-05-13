@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
-
+const bcrypt = require('bcrypt');
 const app = express();
 const PORT = 3000;
 
@@ -152,8 +152,19 @@ app.post("/api/login", (req,res) => {
     const json = fs.readFileSync(__dirname + "/data/users.json", "utf8");
     const users = JSON.parse(json);
     const { name, password } = req.body;
-    const user = users.find(user => user.username === name && user.password === password);
-    return user ? res.status(200).json(user) : res.status(404).json({ error: "User not found" });
+    if (!name || !password) {
+        return res.status(400).json({ error: "Please fill in all fields" });
+    }
+    const user = users.find(user => user.username === name);
+    if (!user) {
+        return res.status(404).json({ error: "User not found" });
+    } 
+    if (user.id > 8) {
+        return bcrypt.compare(password, user.password) ? res.status(200).json(user) : res.status(401).json({ error: "Invalid password" });
+    } else {
+        return password === user.password ? res.status(200).json(user) : res.status(401).json({ error: "Invalid password" });
+    }
+   
 })
 
 // Find out if a specific username is available
@@ -305,24 +316,28 @@ app.put("/api/todos/:id", function (request, response) {
 });
 
 
-/*
+
 // DELETE a todo
 app.delete('/api/todos/:id', function (request, response) {
-    console.info("LOG: Got a DELETE request for ToDos.  This feature is not implemented.");
+    console.info("LOG: Got a DELETE request for ToDos. ID ->", request.params.id);
+    const json = fs.readFileSync(__dirname + "/data/todos.json", "utf8");
+    const todos = JSON.parse(json);
+    const updateData = todos.filter(todo => todo.id !== Number(request.params.id));
+    fs.writeFileSync(__dirname + "/data/todos.json", JSON.stringify(updateData));
     response
         .status(200)
         .end();
 })
-*/
+
 
 
 // POST a new user
-app.post("/api/users", function (request, response) {
+app.post("/api/users", async function (request, response) {
     console.info("LOG: Got a POST request to add a user");
     console.info("LOG: Message body -------->", JSON.stringify(request.body));
-
+    const {name, username, password} = request.body;
     // If not all user data passed, reject the request
-    if (!request.body.name || !request.body.username || !request.body.password) {
+    if (!name || !username || !password) {
         console.warn("LOG: **MISSING DATA**: one or more user properties missing");
         response
             .status(400)
@@ -335,7 +350,7 @@ app.post("/api/users", function (request, response) {
     const users = JSON.parse(json);
 
     // Check for duplicate username
-    const byUsername = (user) => user.username.toLowerCase() === request.body.username.toLowerCase()
+    const byUsername = (user) => user.username.toLowerCase() === username.toLowerCase()
     const matchingUser = users.find(byUsername);
 
     // If username already exists, return 403
@@ -347,23 +362,22 @@ app.post("/api/users", function (request, response) {
 
         return;
     }
-
-    const user = {
-        id: users.length + 1,
-        name: request.body.name,
-        username: request.body.username,
-        password: request.body.password,
-    };
-
-    users.push(user);
-    fs.writeFileSync(__dirname + "/data/users.json", JSON.stringify(users));
-
-    // LOG data for tracing
-    console.info("LOG: New user added is ->", user);
-
-    response
-        .status(201)
-        .json(user);
+    try {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        users.push(user);
+        fs.writeFileSync(__dirname + "/data/users.json", JSON.stringify({id:users.length+1, name, username, password:hashedPassword}));
+    
+        // LOG data for tracing
+        console.info("LOG: New user added is ->", user);
+    
+        response
+            .status(201)
+            .json(user);
+    } catch(error) {
+        response.status(500).json({ error: 'Error registering user' });
+    }
+    
 });
 
 

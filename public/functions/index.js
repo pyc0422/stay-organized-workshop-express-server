@@ -22,7 +22,7 @@ window.onload = () => {
         .then((user) => {
             const {name, username, id} = user
             sessionStorage.setItem('user', JSON.stringify({id, name, username}))
-            window.location.href = '/todo'
+            window.location.href = '/todos'
         })
         .catch(err => alert(err))
     })

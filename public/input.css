@@ -11,10 +11,10 @@
     @apply text-black text-sm font-semibold capitalize
   }
   input{
-    @apply text-black text-sm font-normal border rounded-md p-1
+    @apply text-black text-sm font-normal border rounded-md p-1 border-gray-200
   }
   button {
-    @apply bg-blue-300 shadow-lg hover:bg-blue-700 text-white font-bold py-1 m-2 rounded
+    @apply bg-blue-300 shadow-lg hover:bg-blue-500 text-white font-bold py-1 m-2 rounded focus:bg-blue-200 focus:outline focus:text-blue-500 focus:outline-2 focus:outline-blue-500
   }
   h1 {
     @apply text-3xl font-bold text-center
@@ -28,8 +28,16 @@
   h5 {
     @apply text-xs font-normal
   }
+  select {
+    @apply border border-gray-200 rounded-md p-1 text-black text-sm font-normal
+  }
 }
-
+.add-new{
+  @apply bg-blue-700 text-white hover:bg-gray-600 hover:text-white rounded-md px-5 py-2 text-sm font-medium
+}
+.gray-button {
+  @apply bg-gray-200 shadow-lg hover:bg-gray-500 hover:text-white text-gray-500 font-bold py-1 m-2 rounded focus:bg-gray-200 focus:outline focus:text-gray-500 focus:outline-2 focus:outline-gray-500
+}
 .input-div{
   @apply m-1 p-1 flex gap-3 justify-center
 }
@@ -43,33 +51,7 @@
 .todo-checkbox-icon{
   @apply absolute ml-0.5 w-5 h-5 hidden peer-checked:block
 }
-.checkbox-div{
-  @apply text-2xl p-2 cursor-pointer
-}
-.task-div{
-  @apply flex flex-col gap-3 w-full
-}
-.task-main{
-  @apply flex justify-between items-center gap-3 w-full
-}
-.task-priority{
-  @apply flex justify-center items-center gap-1
-}
-.task-bottom{
-  @apply flex gap-3 text-xs justify-start font-light items-center
-}
-.task-ddl{
-  @apply bg-gray-200 px-1.5 py-1 rounded-md
-}
-.task-category{
-  @apply text-gray-400
-}
-.task-title{
-  @apply text-sm font-normal
-}
-.task-priority-text{
-  @apply text-xs font-light
-}
+
 
 .current-a {
   @apply sm:block bg-gray-600 text-white rounded-md px-3 py-2 text-sm font-medium
