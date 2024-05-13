@@ -6,17 +6,19 @@ window.onload = () => {
     const form = document.getElementById('login-form');
     if (user) {
         const dynamicDiv = document.getElementById('dynamic-div');
-        form.classList.add('hidden')
-       const welcome = document.createElement('h3');
-       welcome.innerHTML = `Welcome back, ${JSON.parse(user).name}`
-        dynamicDiv.innerHTML = 
+        // form.classList.add('hidden')
+        const welcome = document.createElement('div');
+        welcome.className = "text-center"
+        welcome.innerHTML = `Welcome back, ${JSON.parse(user).name}`
+        dynamicDiv.appendChild(welcome)
+        welcome.innerHTML = 
         `
         <h3 class="m-2 p-2 font-bold">Welcome back <span style="color:rgb(3 105 161)">${JSON.parse(user).name}</span> !</h3>
+        <p>Want to use another account? Just Log in!</p>
         `
     }
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        console.log(e.target)
         const name = form['username'].value;
         const password = form['password'].value;
         if (!name || !password) {

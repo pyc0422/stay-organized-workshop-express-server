@@ -548,6 +548,9 @@ select {
     max-width: 1536px;
   }
 }
+.fixed {
+  position: fixed;
+}
 .absolute {
   position: absolute;
 }
@@ -560,6 +563,9 @@ select {
 }
 .right-0 {
   right: 0px;
+}
+.bottom-0 {
+  bottom: 0px;
 }
 .m-2 {
   margin: 0.5rem;
@@ -578,14 +584,14 @@ select {
 .ml-3 {
   margin-left: 0.75rem;
 }
+.mt-2 {
+  margin-top: 0.5rem;
+}
 .mt-4 {
   margin-top: 1rem;
 }
 .mt-8 {
   margin-top: 2rem;
-}
-.mt-2 {
-  margin-top: 0.5rem;
 }
 .flex {
   display: flex;
@@ -608,6 +614,9 @@ select {
 .h-screen {
   height: 100vh;
 }
+.h-5 {
+  height: 1.25rem;
+}
 .min-h-fit {
   min-height: -moz-fit-content;
   min-height: fit-content;
@@ -620,9 +629,6 @@ select {
 }
 .w-6 {
   width: 1.5rem;
-}
-.w-60 {
-  width: 15rem;
 }
 .w-72 {
   width: 18rem;
@@ -654,8 +660,14 @@ select {
 .flex-col {
   flex-direction: column;
 }
+.flex-col-reverse {
+  flex-direction: column-reverse;
+}
 .flex-wrap {
   flex-wrap: wrap;
+}
+.items-end {
+  align-items: flex-end;
 }
 .items-center {
   align-items: center;
@@ -757,6 +769,10 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(234 179 8 / var(--tw-bg-opacity));
 }
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
 .p-0 {
   padding: 0px;
 }
@@ -851,6 +867,10 @@ select {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+.text-blue-400 {
+  --tw-text-opacity: 1;
+  color: rgb(96 165 250 / var(--tw-text-opacity));
 }
 .underline {
   text-decoration-line: underline;
@@ -1012,15 +1032,15 @@ select {
 
 .register-div {
   display: flex;
+  width: 100%;
   flex-direction: column;
-  gap: 0.25rem;
+  align-items: center;
 }
 
 @media (min-width: 768px) {
   .register-div {
+    margin-bottom: 1rem;
     flex-direction: row;
-    justify-content: flex-start;
-    gap: 1.25rem;
   }
 }
 .error-msg {
@@ -1035,6 +1055,7 @@ select {
 }
 @media (min-width: 768px) {
   .register-label {
+    margin-right: 0.5rem;
     width: 10rem;
     text-align: right;
   }
@@ -1055,6 +1076,14 @@ select {
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.register-div input {
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .register-div input {
+    width: 15rem;
+  }
 }
 .hover\:bg-blue-300:hover {
   --tw-bg-opacity: 1;
@@ -1142,9 +1171,6 @@ select {
   }
 }
 @media (min-width: 768px) {
-  .md\:w-1\/2 {
-    width: 50%;
-  }
   .md\:w-3\/4 {
     width: 75%;
   }
