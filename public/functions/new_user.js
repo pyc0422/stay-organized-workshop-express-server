@@ -1,3 +1,4 @@
+
 import { renderNavBarAndLoggedUser } from "./helper.js";
 
 window.onload = () => {
@@ -20,6 +21,10 @@ function handleNewUserSubmit(e) {
     }
     if (pw1 !== pw2) {
         alert('Passwords do not match');
+        return;
+    }
+    if (!checkUserName(username)) {
+        alert('Username already exists');
         return;
     }
     if (!checkPassword(pw1)) {
@@ -47,4 +52,10 @@ function handleNewUserSubmit(e) {
 function checkPassword (pw) {
     const reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\d\s]).{6,20}$/;
     return reg.test(pw);
+}
+
+async function checkUserName (username) {
+    return fetch(`/api/username_available/${username}`)
+    .then((res) => res.status === 200)
+    .catch(err => console.error(err));
 }

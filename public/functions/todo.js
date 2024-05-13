@@ -1,59 +1,104 @@
 import { capitalize, renderNavBarAndLoggedUser } from "./helper.js";
-import { renderUsersOptions } from "./fetchData.js";
+import { renderUsersOptions, getTodoData, deleteTodo, updateTodoStatus, getCategories } from "./fetchData.js";
+import { filterColor } from "./const.js";
 
+var filterObj = {completed:[], category:[], priority:[]}
+var user = {id: 'all', name: 'all'}
 window.onload = () => {
     renderNavBarAndLoggedUser('todo');
     const urlParams = window.location.pathname.split('/');
-    let userId = urlParams[urlParams.length - 1] ==='todos' ? JSON.parse(sessionStorage.getItem('user')).id : urlParams[urlParams.length - 1];
-    renderUsersOptions(userId, 'user-select');
+    user.id = urlParams[urlParams.length - 1] ==='todos' ? JSON.parse(sessionStorage.getItem('user')).id : urlParams[urlParams.length - 1];
+    renderUsersOptions(user.id, 'user-select');
     const select = document.getElementById("user-select")
+    renderfilterCat()
     // render logged in user's todo list as default
-    if (!userId) {
-        renderTodos('all')
+    if (user.id !== 'all') {
+        user.name = JSON.parse(sessionStorage.getItem('user')).name;
+        renderTodos(user.id, user.name)
     } else {
-        renderTodos(userId)
+        renderTodos('all')
     }
+    // handle dynamic render todo by select different user
     select.addEventListener('change', (e) => {
-        const selected = e.target.value;
-        renderTodos(selected);
+        user.id = e.target.value;
+        user.name = e.target.options[e.target.selectedIndex].text;
+        renderTodos(user.id, user.name, filterObj);
     })
-    
-}
-
-
-
-function getTodoData(userId){
-    if(!userId) {
-        alert('Provide a valid user id');
-        return;
-    }
-    if (userId === 'all') {
-        return fetch(`/api/todos`)
-        .then((res) => {
-            if(res.status === 200){
-                return res.json();
-            } else {
-                throw new Error('Failed to fetch todos');
-            }
+    // handle clier filter
+    const clearFilter = document.getElementById('clear');
+    clearFilter.addEventListener('click', () => {
+        filterObj = {completed:[], category:[], priority:[]}
+        const allFilters = document.querySelectorAll('.filter')
+        allFilters.forEach(filter => {
+            filter.classList.remove(...Object.values(filterColor))
         })
-        .catch(err => console.error(err));
-
-    }
-    return fetch(`/api/todos/byuser/${userId}`)
-    .then((res) => {
-        if(res.status === 200){
-            return res.json();
-        } else {
-            throw new Error('Failed to fetch todos');
-        }
+        renderTodos(user.id, user.name, filterObj)
     })
-    .catch(err => console.error(err));
 }
 
-function renderTodos(userId){
+function renderfilterCat() {
+    const filterCat = document.getElementById('filter-category');
+    getCategories()
+    .then(data => {
+        data.forEach(category => {
+            const name = category.name.split(" ")[0]
+            const child = document.createElement('div');
+            child.id = name+ '-filter';
+            child.className = "filter px-2 border border-blue-300 border-2 hover:bg-blue-300 active:bg-blue-300"
+            child.innerText = name
+            child.setAttribute('data-value', category.name)
+            filterCat.appendChild(child)
+        })
+        addClickFuncToFilters()
+    })
+    .catch(err => console.error(err))
+}
+
+function addClickFuncToFilters() {
+    const allFilters = document.querySelectorAll('.filter')
+    allFilters.forEach(filter => {
+        filter.addEventListener('click', (e) => {
+            const cur = e.target
+            const choice = cur.getAttribute('data-value')
+            // get the type of filter from parent element id
+            const type = cur.parentElement.id.split('-')[1]
+            const colorClass = filterColor[choice] || 'bg-blue-300'
+            if (cur.classList.contains(colorClass)) {
+                cur.classList.remove(colorClass)
+                filterObj[type] = filterObj[type].filter(cat =>cat!== choice)
+            } else {
+                cur.classList.add(colorClass)
+                filterObj[type].push(choice)
+            }
+            renderTodos(user.id, user.name, filterObj)
+        })
+    })
+}
+function renderTodos(userId, name, filterObj){
     getTodoData(userId)
     .then((data) => {
         const todoList = document.getElementById('todo-list');
+        const filter = document.getElementById('filter');
+        // if no todo data hide filter secion and show message
+        if (!data || !data.length) {
+            todoList.innerHTML =
+            `
+            <div class="m-2 w-72">
+                <h3 class="text-center">No Task found</h3>
+                <h3 class="text-center">Try to create a new task for ${capitalize(name)}!</h3>
+            </div>`;
+            filter.classList.add('hidden');
+            return
+        } 
+        filter.classList.remove('hidden');
+        
+        // filter data based on filterObj and resign the data
+        for (const type in filterObj) {
+            if (filterObj[type] && filterObj[type].length) {
+                data = data.filter(todo => filterObj[type].includes(todo[type].toString()))
+            }
+        }
+        // refresh todolist content with new render data
         todoList.innerHTML = ''
         data.forEach(todo => {
             const curCard = document.createElement('div');
@@ -69,6 +114,7 @@ function renderTodos(userId){
         checkboxes.forEach(checkbox => {
             checkbox.addEventListener('change', updateTodoStatus);
         })
+        
     })
 }
         
@@ -108,38 +154,5 @@ function createToDoCard(todo) {
                 </div>
             </div>        
         </div>
-    `
-    
-}
-
-function deleteTodo(){
-    const todoId = this.id.split('-')[1];
-    fetch(`/api/todos/${todoId}`, {
-        method: 'DELETE'
-    })
-    .then((res) => {
-        if(res.status === 200){
-            alert('Delete todo successfully');
-            window.location.reload();
-        } else {
-            throw new Error('Failed to delete todo');
-        }
-    })
-    .catch(err => console.error(err));
-}
-
-function updateTodoStatus(){
-    const todoId = this.id.split('-')[1];
-    fetch(`/api/todos/${todoId}`, {
-        method: 'PUT'
-    })
-    .then((res) => {
-        if(res.status === 200){
-            alert('Update todo status successfully');
-            window.location.reload();
-        } else {
-            throw new Error('Failed to update todo status');
-        }
-    })
-    .catch(err => console.error(err));
+    ` 
 }

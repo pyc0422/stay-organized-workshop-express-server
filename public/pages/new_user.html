@@ -4,54 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>New Todo</title>
+    <title>Sign Up</title>
     <link rel="stylesheet" href="../styles/output.css">
     <script src="../functions/new_user.js" type="module"></script>
 
 </head>
 <body>
-    <h1>Register</h1>
-    <div class="container w-3/4 mx-auto">
-        <form id="new-user-form" class="container w-1/2 my-2 p-4 gap-5 mx-auto flex flex-col items-center">
-           
-                <div class="flex justify-between gap-5">
-                    <label for="username" class="w-40 text-right">Username:</label>
-                    <input id="username" class="w-60" required>
+    <main class="container m-8 p-2 w-3/4">
+        <h1>Register</h1>
+        <div class="container w-full md:w-3/4 mx-auto">
+            <form id="new-user-form" class="container w-full md:w-1/2 my-2 p-4 gap-5 mx-auto flex flex-col items-center">
+               
+                    <div class="register-div">
+                        <label for="username" class="register-label">Username:</label>
+                        <input id="username" class="w-60" required>
+                        <div id="username-error" class="error-msg"></div>
+                    </div>
+                    <div class="register-div">
+                        <label for="name" class="register-label">Name:</label>
+                        <input id="name" class="w-60" required>
+                        <div id="username-error" class="text-red-600 text-xs font-light"></div>
+                    </div>
+                    <div class="register-div">
+                        <label for="pw1" class="register-label">Password:</label>
+                        <input 
+                        type="password" 
+                        id="pw1" 
+                        class="w-60" 
+                        minlength=6 
+                        maxlength=20
+                        title="Password must be 6-20 characters long, with at least one lowercase letter, one uppercase letter, one digit, and one special character."
+                        pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\d\s]).*" 
+                        required>
+                    </div>
+                    <div class="register-div">
+                        <label for="pw2" class="register-label">Confirm Password:</label>
+                        <input 
+                        type="password" 
+                        id="pw2" 
+                        class="w-60" 
+                        minlength=6 
+                        maxlength=20
+                        pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\d\s]).*" 
+                        title="Password must be 6-20 characters long, with at least one lowercase letter, one uppercase letter, one digit, and one special character."
+                        required>
+                    </div>
+                
+                <div class="w-full md:w-3/4 flex justify-center items-center">
+                    <button type="submit" class="w-1/2">Save User</button>
+                    <button type="reset" class="w-1/2 gray-button">Clear</button>
                 </div>
-                <div class="flex justify-start gap-5">
-                    <label for="name" class="w-40 text-right">Name:</label>
-                    <input id="name" class="w-60" required>
-                </div>
-                <div class="flex justify-start gap-5">
-                    <label for="pw1" class="w-40 text-right">Password:</label>
-                    <input 
-                    type="password" 
-                    id="pw1" 
-                    class="w-60" 
-                    minlength=6 
-                    maxlength=20
-                    title="Password must be 6-20 characters long, with at least one lowercase letter, one uppercase letter, one digit, and one special character."
-                    pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\d\s]).*" 
-                    required>
-                </div>
-                <div class="flex justify-start gap-5">
-                    <label for="pw2" class="w-40 text-right">Confirm Password:</label>
-                    <input 
-                    type="password" 
-                    id="pw2" 
-                    class="w-60" 
-                    minlength=6 
-                    maxlength=20
-                    pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\d\s]).*" 
-                    title="Password must be 6-20 characters long, with at least one lowercase letter, one uppercase letter, one digit, and one special character."
-                    required>
-                </div>
-            
-            <div class="w-3/4 flex justify-center items-center">
-                <button type="submit" class="w-1/2">Save User</button>
-                <button type="reset" class="w-1/2 gray-button">Clear</button>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
+    </main>
+    
 </body>
 </html>

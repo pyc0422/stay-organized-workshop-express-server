@@ -17,23 +17,24 @@ export const renderNavBarAndLoggedUser = (page) =>{
         
         <div class="flex flex-1 items-stretch justify-start">
             <div class="flex flex-shrink-0 items-center">
-            <img class="h-8 w-auto" src="../imgs/logo.svg" alt="Your Company">
+            <a href="/"><img class="h-8 w-auto" src="../imgs/logo.svg" alt="stay organized"></a>
             </div>
             <div class="sm:ml-6 sm:block">
             <div class="flex justify-center items-center sm:space-x-4">
                 <a href="/" class="hidden sm:block ${page==='homepage' ? 'current-a' : 'nav-a'}">HomePage</a>
-                <a href="/todos" class=${page==='todo' ? 'current-a' : 'nav-a'}>Tasks</a>
+                ${name ? `<a href="/todos" class=${page==='todo' ? 'current-a' : 'nav-a'}>Tasks</a>` : ''}
                 <a href="/newUser" class=${page==='newUser' ? 'current-a' : 'nav-a'}>New User</a>
             </div>
             
             </div>
         </div>
-        <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+        ${name ? 
+        `<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <a href="/newTodo" class=${page === 'newTodo' ? 'current-a' : "add-new"}>
                 <span class="text-md">+</span> New Task
             </a>
-            ${name && page !== 'homepage' ? '<a class="nav-a ml-3 p-1" id="logout-btn">Logout</a>' : ''}
-        </div>
+            <a class="nav-a ml-3 p-1" id="logout-btn">Logout</a>
+        </div>`: ''}
         </div>
         </div>
         </nav>
@@ -47,6 +48,35 @@ export const renderNavBarAndLoggedUser = (page) =>{
         sessionStorage.removeItem('user');
         alert(`${capitalize(name)} has been logged out!`)
         window.location.href = '/';
+    })
+}
+
+export const createOption = (value, text) => {
+    const option = document.createElement('option');
+    option.value = value;
+    option.innerHTML = text;
+    return option;  
+}
+
+export function addClickFuncToFilters() {
+    const allFilters = document.querySelectorAll('.filter')
+    allFilters.forEach(filter => {
+        filter.addEventListener('click', (e) => {
+            const cur = e.target
+            console.log('cure  ',cur)
+            const choice = cur.getAttribute('data-value')
+            console.log('choice', choice)
+            const type = cur.parentElement.id.split('-')[1]
+            const colorClass = filterColor[choice] || 'bg-blue-300'
+            if (cur.classList.contains(colorClass)) {
+                cur.classList.remove(colorClass)
+                filterObj[type] = filterObj[type].filter(cat =>cat!== choice)
+            } else {
+                cur.classList.add(colorClass)
+                filterObj[type].push(choice)
+            }
+            renderTodos(user.id, user.name, filterObj)
+        })
     })
 }
 

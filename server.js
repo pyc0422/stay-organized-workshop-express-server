@@ -362,11 +362,18 @@ app.post("/api/users", async function (request, response) {
 
         return;
     }
-    try {
+
+    try{
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
+        const user = {
+            id: users.length + 1,
+            name,
+            username,
+            password: hashedPassword,
+        };
         users.push(user);
-        fs.writeFileSync(__dirname + "/data/users.json", JSON.stringify({id:users.length+1, name, username, password:hashedPassword}));
+        fs.writeFileSync(__dirname + "/data/users.json", JSON.stringify(users));
     
         // LOG data for tracing
         console.info("LOG: New user added is ->", user);
@@ -374,8 +381,8 @@ app.post("/api/users", async function (request, response) {
         response
             .status(201)
             .json(user);
-    } catch(error) {
-        response.status(500).json({ error: 'Error registering user' });
+    } catch (error) {
+        response.status(500).json({ error: "Internal server error" });
     }
     
 });

@@ -12,7 +12,7 @@
     <main class="container h-screen flex flex-col items-center m-2 p-2 w-3/4">
         <div class="w-full flex flex-col justify-center items-center">
             <div id="choose-user" class="flex gap-4">
-                <div>Select name to check their TODOs:</div>
+                <label for="user-select">Select name to check their TODOs:</label>
                 <select id="user-select">
                     
                 </select>
@@ -20,17 +20,33 @@
             </div>
 
         </div>
-        <div>
-            TODO: create rating filter (by user, catorgory, by date, by status)
+        <div id="filter" class="flex flex-col">
+            <div id="filter-completed" class="flex justify-start gap-4 mt-4">
+                <h5>Filter by Status:</h5>
+                <div id="todo-filter" data-value="false" class="filter bg-blue-200 hover:bg-blue-500">ToDo</div>
+                <div id="done-filter" data-value="true" class="filter bg-green-200 hover:bg-green-500">Done</div>
+            </div>
+            <div id="filter-category" class="flex justify-start gap-4 mt-4 flex-wrap">                
+                <h5>Filter by category:</h5>
+            </div>
+            <div id="filter-priority" class="flex justify-start gap-4 mt-4">
+                <h5>Filter by Priority:</h5>
+                <div id="low-filter" data-value="Low" class="filter bg-green-200 hover:bg-green-500 active:bg-green-500">Low</div>
+                <div id="medium-filter" data-value="Medium" class="filter bg-yellow-200 hover:bg-yellow-500  active:bg-yellow-500">Medium</div>
+                <div id="high-filter" data-value="High" class="filter bg-red-300 hover:bg-red-500  active:bg-red-500">High</div>
+                
+            </div>
+            <button id="clear" class="mt-2 gray-button">Clear Filters</button>
         </div>
         <div class="flex flex-col justify-center items-center gap-6">
-            <div id="todo-list">
+            <div id="todo-list" class="md:pt-8">
             
             </div>
             <div class="w-full flex items-center text-center">
                 <a 
                   href="/newTodo"
-                  class="bg-blue-300 shadow-lg text-white w-full rounded-md py-1 m-2 hover:bg-blue-500 focus:bg-blue-200 focus:outline focus:text-blue-500 focus:outline-2 focus:outline-blue-500">
+                  class="bg-blue-300 shadow-lg text-white w-full min-w-60 rounded-md py-1 m-2 hover:bg-blue-500 focus:bg-blue-200 focus:outline focus:text-blue-500 focus:outline-2 focus:outline-blue-500"
+                >
                     <span class="text-xl">+</span> Add New Task
                 </a>
             </div>

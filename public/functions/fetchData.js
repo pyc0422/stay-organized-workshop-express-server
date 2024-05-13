@@ -1,4 +1,5 @@
-import { capitalize } from "./helper.js";
+import { capitalize, createOption } from './helper.js';
+
 export const renderUsersOptions = (defualtUser, id) => {
     const select = document.getElementById(id);
     fetch('/api/users')
@@ -24,27 +25,70 @@ export const renderUsersOptions = (defualtUser, id) => {
     .catch(err => console.error(err))
 }
 
-export const renderCatergoryOptions = (id) => {
-    const parent = document.getElementById(id);
-    fetch('/api/categories')
-    .then((res) => {
-        if (res.status === 200) {
-            return res.json();
-        } else {
-            throw new Error('Failed to fetch categories');
-        }
-    })
-    .then((data) => {
-        data.forEach(cat => {
-            parent.appendChild(createOption(cat.name, capitalize(cat.name)));
+export const getCategories = () => {
+    // from server get categories
+    return fetch('/api/categories')
+        .then((res) => {
+            if (res.status === 200) {
+                return res.json();
+            } else {
+                throw new Error('Failed to fetch categories');
+            }
         })
-    })
-    .catch(err => console.error(err))
+        .catch(err => console.error(err))
 }
 
-export const createOption = (value, text) => {
-    const option = document.createElement('option');
-    option.value = value;
-    option.innerHTML = text;
-    return option;  
+
+export const getTodoData = async (userId) => {
+    if (userId === 'all') {
+        return fetch(`/api/todos`)
+        .then((res) => {
+            if(res.status === 200){
+                return res.json();
+            } else {
+                throw new Error('Failed to fetch todos');
+            }
+        })
+        .catch(err => console.error(err));
+    }
+    return fetch(`/api/todos/byuser/${userId}`)
+    .then((res) => {
+        if(res.status === 200){
+            return res.json();
+        } else {
+            throw new Error('Failed to fetch todos');
+        }
+    })
+    .catch(err => console.error(err));
+}
+
+export function deleteTodo(){
+    const todoId = this.id.split('-')[1];
+    fetch(`/api/todos/${todoId}`, {
+        method: 'DELETE'
+    })
+    .then((res) => {
+        if(res.status === 200){
+            alert('Delete todo successfully');
+            window.location.reload();
+        } else {
+            throw new Error('Failed to delete todo');
+        }
+    })
+    .catch(err => console.error(err));
+}
+
+export function updateTodoStatus(){
+    const todoId = this.id.split('-')[1];
+    fetch(`/api/todos/${todoId}`, {
+        method: 'PUT'
+    })
+    .then((res) => {
+        if(res.status === 200){
+            alert('Update todo status successfully');
+        } else {
+            throw new Error('Failed to update todo status');
+        }
+    })
+    .catch(err => console.error(err));
 }

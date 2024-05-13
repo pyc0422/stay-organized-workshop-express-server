@@ -52,10 +52,22 @@
   @apply absolute ml-0.5 w-5 h-5 hidden peer-checked:block
 }
 
-
 .current-a {
   @apply sm:block bg-gray-600 text-white rounded-md px-3 py-2 text-sm font-medium
 }
 .nav-a {
-  @apply text-white hover:bg-gray-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium
+  @apply text-white hover:bg-gray-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium cursor-pointer
+}
+
+.register-div {
+  @apply flex md:flex-row flex-col md:justify-start gap-1 md:gap-5
+}
+.error-msg{
+  @apply text-red-500 text-sm font-normal
+}
+.register-label{
+  @apply md:w-40 md:text-right text-center
+}
+.filter {
+  @apply py-1 px-4 rounded shadow-lg text-center cursor-pointer text-xs text-gray-600 font-semibold
 }
