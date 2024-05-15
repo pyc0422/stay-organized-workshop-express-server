@@ -20,20 +20,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Serve static front-end files (HTML, etc.) from "./public"
-app.use(express.static("public"));
+app.use(express.static("src"));
 
 // ROUTER ENDPOINTS
 app.get("/todos", (req, res) => {
-    res.sendFile(__dirname + "/public/pages/todos.html");
+    res.sendFile(__dirname + "/pages/todos.html");
 })
 app.get("/todo/:id", (req, res) => {
-    res.sendFile(__dirname + "/public/pages/todos.html");
+    res.sendFile(__dirname + "/pages/todos.html");
 })
 app.get("/newTodo", (req, res) => {
-    res.sendFile(__dirname + "/public/pages/new_todo.html");
+    res.sendFile(__dirname + "/pages/new_todo.html");
 })
 app.get("/newUser", (req, res) => {
-    res.sendFile(__dirname + "/public/pages/new_user.html");
+    res.sendFile(__dirname + "/pages/new_user.html");
 });
 ///////////////////////////////////////////////////////////////////////
 //   API ENDPOINTS ////////////////////////////////////////////////////

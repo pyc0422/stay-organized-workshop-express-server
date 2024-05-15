@@ -5,9 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tailwind": "postcss ./public/input.css -o ./public/styles/output.css",
+    "tailwind": "postcss ./src/input.css -o ./src/styles/output.css",
     "server": "nodemon ./server.js",
-    "start": "concurrently \"nodemon server.js\" \"postcss ./public/input.css -o ./public/styles/output.css --watch\""
+    "start": "concurrently \"nodemon ./src/server.js\" \"postcss ./src/input.css -o ./src/styles/output.css --watch\""
   },
   "author": "",
   "license": "ISC",
