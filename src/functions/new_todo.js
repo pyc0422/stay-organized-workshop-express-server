@@ -37,12 +37,13 @@ function handleNewTodoSubmit(e){
     })
     .then((res) => {
         if(res.status === 201) {
-            alert('Create new task successfully!')
-            window.location.href = '/todos';
+            return swal('<h3 class="font-bold text-xl">Create new task successfully!</h3>','','success')
+           
         } else {
             throw new Error('Failed to create todo');
         }
     })
+    .then(() =>  window.location.href = '/todos')
     .catch(err => console.error('Add New Todo Fetch Error', err));
 }
 

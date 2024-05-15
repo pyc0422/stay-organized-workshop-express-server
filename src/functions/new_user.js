@@ -5,7 +5,6 @@ window.onload = () => {
     renderNavBarAndLoggedUser('newUser');
     const form = document.getElementById('new-user-form');
     form.addEventListener('submit', (e) => handleNewUserSubmit(e));
-
 }
 
 function handleNewUserSubmit(e) {
@@ -16,19 +15,19 @@ function handleNewUserSubmit(e) {
     const pw1 = form['pw1'].value;
     const pw2 = form['pw2'].value;
     if (!name || !username || !pw1 || !pw2) {
-        alert('Please fill in all fields');
+        swal('<h3 class="font-bold text-xl">Please fill in all fields</h3>','','warning');
         return;
     }
     if (pw1 !== pw2) {
-        alert('Passwords do not match');
+        swal('<h3 class="font-bold text-xl">Passwords do not match</h3>','','warning');
         return;
     }
     if (!checkUserName(username)) {
-        alert('Username already exists');
+        swal('<h3 class="font-bold text-xl">Username already exists</h3>','','warning');
         return;
     }
     if (!checkPassword(pw1)) {
-        alert('Password must contain at least one uppercase letter, one lowercase letter, one number, one special character, and be between 6 and 20 characters long');
+        swal('<h3 class="font-bold text-xl">Password not meet the requirement</h3>','','warning');
         return;
     }
     fetch(('/api/users'), {
@@ -38,11 +37,11 @@ function handleNewUserSubmit(e) {
     )
     .then((res) => {
         if (res.status === 201) {
-            alert('New user created successfully')
+            swal('<h3 class="font-bold text-xl">New user created successfully</h3','','success')
             window.location.href = '/';
             return
         } else if (res.status === 403) {
-            alert('Username already exists');
+            swal('<h3 class="font-bold text-xl">Username already exists</h3>','','warning');
             return;
         }
     })

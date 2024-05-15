@@ -4,6 +4,7 @@ import { filterColor } from "./const.js";
 
 var filterObj = {completed:[], category:[], priority:[]}
 var user = {id: 'all', name: 'all'}
+
 window.onload = () => {
     renderNavBarAndLoggedUser('todo');
     const urlParams = window.location.pathname.split('/');

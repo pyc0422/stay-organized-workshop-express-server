@@ -22,7 +22,7 @@ window.onload = () => {
         const name = form['username'].value;
         const password = form['password'].value;
         if (!name || !password) {
-            alert('Please fill in all fields');
+            swal('<h3 class="font-bold text-xl">Please fill in all fields</h3>', '', 'warning');
             return;
         }
         fetch('/api/login', {method: 'POST', headers:{ "Content-Type": "application/json"}, body: JSON.stringify({name, password})})
@@ -38,6 +38,6 @@ window.onload = () => {
             sessionStorage.setItem('user', JSON.stringify({id, name, username}))
             window.location.href = '/todos'
         })
-        .catch(err => alert(err))
+        .catch(err => console.error(err))
     })
 }

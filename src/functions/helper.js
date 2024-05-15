@@ -46,8 +46,8 @@ export const renderNavBarAndLoggedUser = (page) =>{
     logoutBtn.addEventListener('click', (e) => {
         e.preventDefault();
         sessionStorage.removeItem('user');
-        alert(`${capitalize(name)} has been logged out!`)
-        window.location.href = '/';
+        swal(`<h3 class="font-bold text-xl">${capitalize(name)} has been logged out!</h3>`, '', 'success')
+        .then(() => window.location.href = '/')
     })
 }
 
