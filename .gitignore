@@ -1,3 +1,4 @@
 node_modules
 package-lock.json
 wip_refactor_notes.md
+.env
