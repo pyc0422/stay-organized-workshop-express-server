@@ -5,7 +5,6 @@ const fs = require("fs");
 const bcrypt = require('bcrypt');
 const app = express();
 const PORT = process.env.PORT || 3000;
-const BASE_URL = process.env.BASE_URL || `http://localhost:${PORT}`;
 ///////////////////////////////////////////////////////////////////////
 //   MIDDLEWARE (CONFIGURATIONS) //////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
@@ -34,7 +33,7 @@ app.get("/newTodo", (req, res) => {
     res.sendFile(__dirname + "/pages/new_todo.html");
 })
 app.get("/newUser", (req, res) => {
-    res.sendFile(__dirname + "/pages/new_user.html");
+    res.sendFile(__dirname + `/pages/new_user.html`);
 });
 ///////////////////////////////////////////////////////////////////////
 //   API ENDPOINTS ////////////////////////////////////////////////////
