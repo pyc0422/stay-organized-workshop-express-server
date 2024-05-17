@@ -49,20 +49,21 @@
   @apply bg-blue-700 text-white hover:bg-gray-600 hover:text-white rounded-md px-5 py-2 text-sm font-medium
 }
 .gray-button {
-  @apply bg-gray-200 shadow-lg hover:bg-gray-500 hover:text-white text-gray-500 font-bold py-1 m-2 rounded focus:bg-gray-200 focus:outline focus:text-gray-500 focus:outline-2 focus:outline-gray-500
+  @apply bg-gray-200 shadow-lg hover:bg-gray-500 hover:text-white text-gray-500 font-bold py-1 m-2 rounded focus:bg-gray-200 focus:outline-none focus:text-gray-500 focus:ring-2 focus:ring-gray-500
 }
 .input-div{
   @apply m-1 p-1 flex gap-3 justify-center
 }
 
 .todo-card{
-  @apply p-4 m-2 flex gap-5 justify-start items-start border rounded-lg shadow-lg w-96
+  @apply p-4 my-2 mx-4 flex gap-5 justify-start items-start border rounded-lg shadow-lg w-96 hover:scale-105 transition-transform duration-300
 }
 .todo-checkbox{
-  @apply h-6 w-6 cursor-pointer appearance-none checked:bg-blue-300 relative shrink-0 rounded-sm bg-white ring-2 ring-blue-300
+  @apply h-6 w-6 cursor-pointer appearance-none checked:bg-blue-300 shrink-0 rounded-sm bg-white ring-2 ring-blue-300
 }
 .todo-checkbox-icon{
-  @apply absolute ml-0.5 w-5 h-5 hidden peer-checked:block
+  /* @apply absolute ml-0.5 w-5 h-5 hidden peer-checked:block */
+  @apply absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden peer-checked:block w-6 h-6
 }
 
 .current-a {

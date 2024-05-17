@@ -1,10 +1,11 @@
 
-import { renderNavBarAndLoggedUser } from "./helper.js";
+import { renderNavBarAndLoggedUser,removeFocusStyle } from "./helper.js";
 
 window.onload = () => {
     renderNavBarAndLoggedUser('newUser');
     const form = document.getElementById('new-user-form');
     form.addEventListener('submit', (e) => handleNewUserSubmit(e));
+    removeFocusStyle();
 }
 
 function handleNewUserSubmit(e) {

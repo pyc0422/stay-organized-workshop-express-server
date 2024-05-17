@@ -1,12 +1,13 @@
-import { renderNavBarAndLoggedUser, createOption  } from "./helper.js";
+import { renderNavBarAndLoggedUser, createOption, removeFocusStyle } from "./helper.js";
 import { renderUsersOptions, getCategories} from "./fetchData.js";
 window.onload = ()=>{
     renderNavBarAndLoggedUser('newTodo');
     const userId = JSON.parse(sessionStorage.getItem('user')).id;
     renderUsersOptions(userId || 'all', 'user-select');
-    renderCategoriesOptions()
+    renderCategoriesOptions();
     const form = document.getElementById('new-todo-form');
     form.addEventListener('submit', handleNewTodoSubmit);
+    removeFocusStyle();
 }
 
 function renderCategoriesOptions(){

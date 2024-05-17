@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>New Todo</title>
+    <title>Stay Orgnazied - New Todo</title>
     <link rel="stylesheet" href="../styles/output.css">
+    <link rel="icon" href="../images/favicon.png">
     <script src="../functions/new_todo.js" type="module"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
 </head>
@@ -15,25 +16,25 @@
             <div class="flex w-3/4 items-center justify-between">
                 <div>
                     <label for="user-select">User:</label>
-                    <select id="user-select"></select>
+                    <select id="user-select" name="user"></select>
                 </div>
                 <div>
                     <label for="categories">Category:</label>
-                    <select id="categories"></select>
+                    <select id="categories" name="category"></select>
                 </div>
             </div>
             <div class="flex w-3/4 justify-start gap-3">
                 <label for="description">Task:</label>
-                <textarea id="description" class="border w-full text-base font-normal border-gray-600 rounded"></textarea>
+                <textarea id="description" name="description" class="border w-full text-base font-normal border-gray-600 rounded"></textarea>
             </div>
             <div class="flex w-3/4 justify-between items-center">
                 <div>
                     <label for="deadline">Due Date:</label>
-                    <input type="date" id="deadline" class="apperance-none">
+                    <input type="date" id="deadline" name="deadline" class="appearance-none">
                 </div>
                 <div>
                     <label for="priority">Priority: </label>
-                    <select id="priority">
+                    <select id="priority" name="priority">
                         <option value="Low">Low</option>
                         <option value="Medium">Medium</option>
                         <option value="High">High</option>
@@ -44,9 +45,9 @@
                 <button type="submit" class="w-1/2">Save Task</button>
                 <button type="reset" class="w-1/2 gray-button">Clear</button>
             </div>
-            </form>
+        </form>
     </div>
-    <footer class="fixed bottom-0">
+    <footer class="fixed bottom-0 w-full">
         <p class="text-center text-xs">© 2024 Stay Organized</p>
     </footer>
 </body>

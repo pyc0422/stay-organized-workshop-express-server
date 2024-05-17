@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up</title>
+    <title>Stay Orgnazied - Register</title>
     <link rel="stylesheet" href="../styles/output.css">
+    <link rel="icon" href="../imgs/logo.svg">
     <script src="../functions/new_user.js" type="module"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
 </head>
@@ -14,52 +15,51 @@
         <h1>Register</h1>
         <div class="container w-full md:w-3/4 mx-auto">
             <form id="new-user-form" class="container w-full md:w-3/4 my-2 p-4 gap-5 mx-auto flex flex-col items-center">
-               
-                    <div class="register-div">
-                        <label for="username" class="register-label">Username:</label>
-                        <input id="username" required>
-                        <div id="username-error" class="error-msg"></div>
-                    </div>
-                    <div class="register-div">
-                        <label for="name" class="register-label">Name:</label>
-                        <input id="name" required>
-                        <div id="username-error" class="text-red-600 text-xs font-light"></div>
-                    </div>
-                    <div class="register-div">
-                        <label for="pw1" class="register-label">Password:</label>
-                        <input
-                        Autocomplete 
-                        type="password" 
-                        id="pw1"
-                        minlength=6 
-                        maxlength=20
-                        title="Password must be 6-20 characters long, with at least one lowercase letter, one uppercase letter, one digit, and one special character."
-                        pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\d\s]).*" 
-                        required>
-                    </div>
-                    <div class="register-div">
-                        <label for="pw2" class="register-label">Confirm Password:</label>
-                        <input 
-                        Autocomplete
-                        type="password" 
-                        id="pw2" 
-                        minlength=6 
-                        maxlength=20
-                        pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\d\s]).*" 
-                        title="Password must be 6-20 characters long, with at least one lowercase letter, one uppercase letter, one digit, and one special character."
-                        required>
-                    </div>
-                    <p class="text-sm">Exist User? Just <a href="/" class="underline text-blue-400 hover:opacity-80">LogIn</a></p>
-
+                <div class="register-div">
+                    <label for="username" class="register-label">Username:</label>
+                    <input id="username" name="username" required>
+                    <div id="username-error" class="error-msg"></div>
+                </div>
+                <div class="register-div">
+                    <label for="name" class="register-label">Name:</label>
+                    <input id="name" name="name" required>
+                    <div id="name-error" class="text-red-600 text-xs font-light"></div>
+                </div>
+                <div class="register-div">
+                    <label for="pw1" class="register-label">Password:</label>
+                    <input
+                    autocomplete="new-password"
+                    type="password"
+                    id="pw1"
+                    name="password"
+                    minlength="6"
+                    maxlength="20"
+                    title="Password must be 6-20 characters long, with at least one lowercase letter, one uppercase letter, one digit, and one special character."
+                    pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\d\s]).*"
+                    required>
+                </div>
+                <div class="register-div">
+                    <label for="pw2" class="register-label">Confirm Password:</label>
+                    <input
+                    autocomplete="new-password"
+                    type="password"
+                    id="pw2"
+                    name="confirm_password"
+                    minlength="6"
+                    maxlength="20"
+                    pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\d\s]).*"
+                    title="Password must be 6-20 characters long, with at least one lowercase letter, one uppercase letter, one digit, and one special character."
+                    required>
+                </div>
+                <p class="text-sm">Existing User? Just <a href="/" class="underline text-blue-400 hover:opacity-80">LogIn</a></p>
                 <div class="w-full md:w-3/4 flex justify-center items-center">
                     <button type="submit" class="w-1/2">Save User</button>
                     <button type="reset" class="w-1/2 gray-button">Clear</button>
                 </div>
             </form>
         </div>
-
     </main>
-    <footer class="fixed bottom-0">
+    <footer class="fixed bottom-0 w-full">
         <p class="text-center text-xs">© 2024 Stay Organized</p>
     </footer>
 </body>

@@ -1,6 +1,6 @@
-import { capitalize, renderNavBarAndLoggedUser } from "./helper.js";
+import { capitalize, renderNavBarAndLoggedUser, removeFocusStyle } from "./helper.js";
 import { renderUsersOptions, getTodoData, deleteTodo, updateTodoStatus, getCategories } from "./fetchData.js";
-import { filterColor } from "./const.js";
+import { FILTERCOLOR } from "./const.js";
 
 var filterObj = {completed:[], category:[], priority:[]}
 var user = {id: 'all', name: 'all'}
@@ -27,12 +27,13 @@ window.onload = () => {
     })
     // handle clier filter
     const clearFilter = document.getElementById('clear');
-    clearFilter.addEventListener('click', () => {
+    clearFilter.addEventListener('click', (e) => {
         filterObj = {completed:[], category:[], priority:[]}
         const allFilters = document.querySelectorAll('.filter')
         allFilters.forEach(filter => {
-            filter.classList.remove(...Object.values(filterColor))
+            filter.classList.remove(...Object.values(FILTERCOLOR))
         })
+        e.target.blur();
         renderTodos(user.id, user.name, filterObj)
     })
 }
@@ -63,12 +64,14 @@ function addClickFuncToFilters() {
             const choice = cur.getAttribute('data-value')
             // get the type of filter from parent element id
             const type = cur.parentElement.id.split('-')[1]
-            const colorClass = filterColor[choice] || 'bg-blue-300'
+            const colorClass = FILTERCOLOR[choice.toLowerCase()] || 'bg-blue-300'
+            console.log('colorClass', colorClass)
             if (cur.classList.contains(colorClass)) {
                 cur.classList.remove(colorClass)
                 filterObj[type] = filterObj[type].filter(cat =>cat!== choice)
             } else {
                 cur.classList.add(colorClass)
+                console.log('cur classList', cur.classList, choice)
                 filterObj[type].push(choice)
             }
             renderTodos(user.id, user.name, filterObj)
@@ -94,11 +97,8 @@ function renderTodos(userId, name, filterObj){
         filter.classList.remove('hidden');
         
         // filter data based on filterObj and resign the data
-        for (const type in filterObj) {
-            if (filterObj[type] && filterObj[type].length) {
-                data = data.filter(todo => filterObj[type].includes(todo[type].toString()))
-            }
-        }
+        if(filterObj) { data = filterData(data, filterObj)}
+
         // refresh todolist content with new render data
         todoList.innerHTML = ''
         data.forEach(todo => {
@@ -118,7 +118,14 @@ function renderTodos(userId, name, filterObj){
         
     })
 }
-        
+function filterData (data, filters) {
+    return Object.keys(filters).reduce((filteredData, key) => {
+        if (filters[key] && filters[key].length) {
+          return filteredData.filter(item => filters[key].includes(item[key].toString()));
+        }
+        return filteredData;
+      }, data);
+}
 function createToDoCard(todo) {
     const color = {
         high:'red',
@@ -128,9 +135,9 @@ function createToDoCard(todo) {
     const curColor = color[todo.priority.toLowerCase()]
     return `
         <div class="text-2xl p-2 cursor-pointer">
-            <label>
+            <label class="relative">
                 <input type="checkbox" id="todo-${todo.id}" class="todo-checkbox peer" ${todo.completed ? "checked" : ""}>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="white" class="todo-checkbox-icon" style="margin-top:-28px">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="white" class="todo-checkbox-icon top-[20%]">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                 </svg>
             </label>

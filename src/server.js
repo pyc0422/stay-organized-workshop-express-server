@@ -4,7 +4,7 @@ const cors = require("cors");
 const fs = require("fs");
 const bcrypt = require('bcrypt');
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 ///////////////////////////////////////////////////////////////////////
 //   MIDDLEWARE (CONFIGURATIONS) //////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
@@ -164,7 +164,6 @@ app.post("/api/login", (req,res) => {
     } else {
         return password === user.password ? res.status(200).json(user) : res.status(401).json({ error: "Invalid password" });
     }
-   
 })
 
 // Find out if a specific username is available
@@ -374,10 +373,8 @@ app.post("/api/users", async function (request, response) {
         };
         users.push(user);
         fs.writeFileSync(__dirname + "/data/users.json", JSON.stringify(users));
-    
         // LOG data for tracing
         console.info("LOG: New user added is ->", user);
-    
         response
             .status(201)
             .json(user);
