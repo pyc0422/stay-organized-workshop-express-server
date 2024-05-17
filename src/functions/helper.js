@@ -64,9 +64,7 @@ export function addClickFuncToFilters() {
     allFilters.forEach(filter => {
         filter.addEventListener('click', (e) => {
             const cur = e.target
-            console.log('cure  ',cur)
             const choice = cur.getAttribute('data-value')
-            console.log('choice', choice)
             const type = cur.parentElement.id.split('-')[1]
             const colorClass = filterColor[choice] || 'bg-blue-300'
             if (cur.classList.contains(colorClass)) {

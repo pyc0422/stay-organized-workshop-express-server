@@ -65,13 +65,12 @@ function addClickFuncToFilters() {
             // get the type of filter from parent element id
             const type = cur.parentElement.id.split('-')[1]
             const colorClass = FILTERCOLOR[choice.toLowerCase()] || 'bg-blue-300'
-            console.log('colorClass', colorClass)
+            // toggle background color class and update filterObj
             if (cur.classList.contains(colorClass)) {
                 cur.classList.remove(colorClass)
                 filterObj[type] = filterObj[type].filter(cat =>cat!== choice)
             } else {
                 cur.classList.add(colorClass)
-                console.log('cur classList', cur.classList, choice)
                 filterObj[type].push(choice)
             }
             renderTodos(user.id, user.name, filterObj)
@@ -85,8 +84,7 @@ function renderTodos(userId, name, filterObj){
         const filter = document.getElementById('filter');
         // if no todo data hide filter secion and show message
         if (!data || !data.length) {
-            todoList.innerHTML =
-            `
+            todoList.innerHTML =`
             <div class="m-2 w-72">
                 <h3 class="text-center">No Task found</h3>
                 <h3 class="text-center">Try to create a new task for ${capitalize(name)}!</h3>
